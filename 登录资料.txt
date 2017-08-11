@@ -1,0 +1,18 @@
+10.10.22.20       ftp     ql@0315
+
+git 提交代码
+
+echo "# PC" >> README.md //创建一个需要提交的文件
+git init //初始化本地的仓库
+git add README.md  //将目标文件增加到本地
+git commit -m "first commit"  //将目标文件提交到本地
+git remote add origin https://github.com/juxiezuo-cyh/PC.git  //将目标文件增加到远程仓库
+git push -u origin master  //将目标文件推送到远程仓库
+
+内网：192.168.7.71
+公网：124.42.102.178
+用户名：ftp1   ftp2  
+密码：ftp@123
+
+
+
