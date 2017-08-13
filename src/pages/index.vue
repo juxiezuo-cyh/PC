@@ -25,7 +25,9 @@
     </div>
     <div class="index-right">
       <div class="index-board-list">
-
+        <div class="index-board-item"  v-for="item in boardList">
+          {{item.title}}
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +38,28 @@ export default {
   name: 'IndexPage',
   data() {
     return {
+      boardList:[
+        {
+          title:'开',
+          description:'开放产品是一款开放产品',
+          saleout:false
+        },
+        {
+          title:'开发',
+          description:'开放产品是一款开放产品',
+          saleout:false
+        },
+        {
+          title:'开发产',
+          description:'开放产品是一款开放产品',
+          saleout:false
+        },
+        {
+          title:'开发产品',
+          description:'开放产品是一款开放产品',
+          saleout:false
+        }
+      ],
       newsList: [
         {
           title: '数据统计',
