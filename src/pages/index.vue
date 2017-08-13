@@ -4,29 +4,36 @@
       <div class="index-left-block">
         <h2>全部产品</h2>
         <template v-for="product in productList">
-          <h3>{{product.title}}</h3>
-          <ul>
-            <li v-for="item in product.list" :class="{'hot':item.hot}">
+          <h3 :key="product.title">{{product.title}}</h3>
+          <ul :key="product.title">
+            <li v-for="item in product.list" :key="item.name" :class="{'hot':item.hot}">
               <a :href="item.url" target="block">{{item.name}}</a>
               <span v-if="item.hot" class="hot-tag">Hot</span>
             </li>
           </ul>
-          <div v-if="!product.last" class="hr"></div>
+          <div v-if="!product.last" :key="product.title" class="hr"></div>
         </template>
       </div>
       <div class="index-left-block lastest-news">
         <h2>最新消息</h2>
         <ul>
-          <li v-for="news in newsList">
+          <li v-for="news in newsList" :key="news.title">
             <a :href="news.url" target="block">{{news.title}}</a>
           </li>
         </ul>
       </div>
     </div>
     <div class="index-right">
+      <slide-show :slides="slides"></slide-show>
       <div class="index-board-list">
-        <div class="index-board-item"  v-for="item in boardList">
-          {{item.title}}
+        <div class="index-board-item" :class="[{'line-last':index % 2},'index-board-'+item.id]" v-for="(item,index) in boardList" :key="item.title">
+          <div class="index-board-item-inner">
+            <h2>{{item.title}}</h2>
+            <p>{{item.description}}</p>
+            <div class="index-board-button">
+              <a href="" class="button">立刻购买</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -34,30 +41,60 @@
 </template>
 
 <script>
+import slideShow from  '../components/slideShow.vue'
 export default {
+  components:{
+    slideShow
+  },
   name: 'IndexPage',
   data() {
     return {
-      boardList:[
+      slides:[
         {
-          title:'开',
-          description:'开放产品是一款开放产品',
-          saleout:false
+          src:require('../assets/slideShow/pic1.jpg'),
+          title:'xx1',
+          href:'http://www.baidu.com'
         },
         {
-          title:'开发',
-          description:'开放产品是一款开放产品',
-          saleout:false
+          src:require('../assets/slideShow/pic2.jpg'),
+          title:'xx1',
+          href:'http://www.baidu.com'
         },
         {
-          title:'开发产',
-          description:'开放产品是一款开放产品',
-          saleout:false
+          src:require('../assets/slideShow/pic3.jpg'),
+          title:'xx1',
+          href:'http://www.baidu.com'
         },
         {
-          title:'开发产品',
-          description:'开放产品是一款开放产品',
-          saleout:false
+          src:require('../assets/slideShow/pic4.jpg'),
+          title:'xx1',
+          href:'http://www.baidu.com'
+        }
+      ],
+      boardList: [
+        {
+          title: '开',
+          description: '开放产品是一款开放产品',
+          id: 'car',
+          saleout: false
+        },
+        {
+          title: '开发',
+          description: '开放产品是一款开放产品',
+          id: 'earth',
+          saleout: false
+        },
+        {
+          title: '开发产',
+          id: 'loud',
+          description: '开放产品是一款开放产品',
+          saleout: false
+        },
+        {
+          title: '开发产品',
+          id: 'hill',
+          description: '开放产品是一款开放产品',
+          saleout: false
         }
       ],
       newsList: [
