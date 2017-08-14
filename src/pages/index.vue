@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="index-right">
-      <slide-show :slides="slides"></slide-show>
+      <slide-show :slides="slides" :inv="inv"></slide-show>
       <div class="index-board-list">
         <div class="index-board-item" :class="[{'line-last':index % 2},'index-board-'+item.id]" v-for="(item,index) in boardList" :key="item.title">
           <div class="index-board-item-inner">
@@ -49,6 +49,7 @@ export default {
   name: 'IndexPage',
   data() {
     return {
+      inv:2000,
       slides:[
         {
           src:require('../assets/slideShow/pic1.jpg'),
