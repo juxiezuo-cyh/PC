@@ -5,11 +5,11 @@
         <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li>登录</li>
+            <li @click="logClick">登录</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
+            <li @click="regClick">注册</li>
             <li class="nav-pile">|</li>
-            <li>关于</li>
+            <li @click="aboutClick">关于</li>
           </ul>
         </div>
       </div>
@@ -24,14 +24,50 @@
     <div class="app-foot">
       <p>@ 2017 / 8 / 11 chengyuhan </p>
     </div>
+
+    <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+      <p>about</p>
+    </my-dialog>
+
+    <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
+      <log-form></log-form>
+    </my-dialog>
+
+    <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+      <reg-form></reg-form>
+    </my-dialog>
   </div>
 </template>
 <script>
+import Dialog from './dialog.vue';
+import logForm from './logForm.vue';
+import regForm from './regForm.vue';
 export default {
   name: 'layout',
   data() {
     return {
-      
+      isShowAboutDialog: false,
+      isShowLogDialog: false,
+      isShowRegDialog: false
+    }
+  },
+  components: {
+    myDialog: Dialog,
+    logForm,
+    regForm
+  },
+  methods: {
+    aboutClick() {
+      this.isShowAboutDialog = true;
+    },
+    logClick(){
+      this.isShowLogDialog = true;
+    },
+    regClick(){
+      this.isShowRegDialog = true;
+    },
+    closeDialog(attr) {
+      this[attr] = false;//直接获取函数里的参数。
     }
   }
 }
@@ -126,6 +162,8 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
+
 
 
 /* HTML5 display-role reset for older browsers */
@@ -255,7 +293,7 @@ body {
   background: #4fc08d;
 }
 
-.g-form-line {
+/* .g-form-line {
   padding: 15px 0;
 }
 
@@ -285,5 +323,5 @@ body {
 .g-form-error {
   color: red;
   padding-left: 15px;
-}
+} */
 </style>
