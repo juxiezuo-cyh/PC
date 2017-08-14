@@ -58,17 +58,17 @@ export default {
         },
         {
           src:require('../assets/slideShow/pic2.jpg'),
-          title:'xx1',
+          title:'xx2',
           href:'http://www.baidu.com'
         },
         {
           src:require('../assets/slideShow/pic3.jpg'),
-          title:'xx1',
+          title:'xx3',
           href:'http://www.baidu.com'
         },
         {
           src:require('../assets/slideShow/pic4.jpg'),
-          title:'xx1',
+          title:'xx4',
           href:'http://www.baidu.com'
         }
       ],
