@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="index-right">
-      <slide-show :slides="slides" :inv="inv"></slide-show>
+      <slide-show :slides="slides" :inv="inv" @onchange="doSomeThing"></slide-show>
       <div class="index-board-list">
         <div class="index-board-item" :class="[{'line-last':index % 2},'index-board-'+item.id]" v-for="(item,index) in boardList" :key="item.title">
           <div class="index-board-item-inner">
@@ -45,6 +45,14 @@ import slideShow from  '../components/slideShow.vue'
 export default {
   components:{
     slideShow
+  },
+  created: function () {
+    // this.$http.get('api/getNewList')
+    // .then((res) => {
+    //   this.newsList = res.data;
+    // },(err) => {
+    //   console.log(err);
+    // });
   },
   name: 'IndexPage',
   data() {
@@ -163,6 +171,11 @@ export default {
           ]
         }
       }
+    }
+  },
+  methods:{
+    doSomeThing(index){
+      console.log(index);
     }
   }
 }

@@ -75,7 +75,8 @@ export default {
       this.isShow = false
       setTimeout(() => {
         this.isShow = true
-        this.nowIndex = index
+        this.nowIndex = index;
+        this.$emit('onchange',index);
       }, 10)
     },
     left() {
