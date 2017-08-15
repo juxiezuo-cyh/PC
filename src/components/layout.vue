@@ -5,10 +5,21 @@
         <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li @click="logClick">登录</li>
-            <li class="nav-pile">|</li>
-            <li @click="regClick">注册</li>
-            <li class="nav-pile">|</li>
+            <!-- 用户登录以后 -->
+            <template v-if="name !== ''">
+              <li>{{name}}</li>
+              <li class="nav-pile">|</li>
+              <li @click="quite">退出</li>
+              <li class="nav-pile">|</li>
+            </template>
+            <!-- 未登录之前 -->
+            <template v-if="name === ''">
+              <li @click="logClick">登录</li>
+              <li class="nav-pile">|</li>
+              <li @click="regClick">注册</li>
+              <li class="nav-pile">|</li>
+            </template>
+
             <li @click="aboutClick">关于</li>
           </ul>
         </div>
@@ -30,7 +41,7 @@
     </my-dialog>
 
     <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
-      <log-form></log-form>
+      <log-form @has-log="onSuccessLog"></log-form>
     </my-dialog>
 
     <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
@@ -48,7 +59,9 @@ export default {
     return {
       isShowAboutDialog: false,
       isShowLogDialog: false,
-      isShowRegDialog: false
+      isShowRegDialog: false,
+      name:'',
+      id:''
     }
   },
   components: {
@@ -57,6 +70,14 @@ export default {
     regForm
   },
   methods: {
+    quite () {
+      this.name = '';
+    },
+    onSuccessLog(data){
+      this.name = data.username;
+      // 在成功回调函数里面关闭弹框
+      this.closeDialog('isShowLogDialog');
+    },
     aboutClick() {
       this.isShowAboutDialog = true;
     },
