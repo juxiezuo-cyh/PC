@@ -37,7 +37,12 @@
     </div>
 
     <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
-      <p>about</p>
+      <p>
+        作者：巨蟹座--程雨寒 <br>
+        github 个人主页：<a target="block" href="https://github.com/juxiezuo-cyh">https://github.com/juxiezuo-cyh</a><br>
+        github 克隆地址：https://github.com/juxiezuo-cyh/PC.git <br>
+        求星星 求星星<br>\(^o^)/~
+      </p>
     </my-dialog>
 
     <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
@@ -45,7 +50,7 @@
     </my-dialog>
 
     <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
-      <reg-form></reg-form>
+      <reg-form @reg-success="onSuccessReg"></reg-form>
     </my-dialog>
   </div>
 </template>
@@ -72,6 +77,11 @@ export default {
   methods: {
     quite () {
       this.name = '';
+    },
+    onSuccessReg(data){
+      this.name = data.username;
+      // 在成功回调函数里面关闭弹框
+      this.closeDialog('isShowRegDialog');
     },
     onSuccessLog(data){
       this.name = data.username;
@@ -314,7 +324,7 @@ body {
   background: #4fc08d;
 }
 
-/* .g-form-line {
+.g-form-line {
   padding: 15px 0;
 }
 
@@ -344,5 +354,5 @@ body {
 .g-form-error {
   color: red;
   padding-left: 15px;
-} */
+}
 </style>
