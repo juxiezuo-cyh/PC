@@ -2,16 +2,14 @@
   <div class="detail-wrap">
     <div class="detail-left">
       <div class="product-board">
-        <img src="../assets/images/1.png">
+        <img :src="productIcon">
         <ul>
-          <!-- <li v-for="item in products">{{item.name}}</li> -->
-          <router-link to='' :key="item.name" v-for="item in products" tag="li">
+          <router-link active-class="active" :to='{path:item.path}' :key="item.name" v-for="item in products" tag="li">
             {{item.name}}
           </router-link>
         </ul>
       </div>
     </div>
-
     <div class="detail-right">
       <keep-alive>
         <router-view></router-view>
@@ -22,6 +20,11 @@
 
 <script>
 export default {
+  computed: {
+    productIcon() {
+      return this.imgMap[this.$route.path]
+    }
+  },
   data() {
     return {
       products: [
@@ -47,7 +50,7 @@ export default {
           active: false
         }
       ],
-      imgMap: {
+      imgMap: {//根据路由做的图片的映射
         '/detail/count': require("../assets/images/1.png"),
         '/detail/forecast': require("../assets/images/2.png"),
         '/detail/analysis': require("../assets/images/3.png"),
@@ -106,8 +109,6 @@ export default {
 .sales-board {
   background: #fff;
 }
-
-.sales-board-form {}
 
 .sales-board-intro h2 {
   font-size: 20px;

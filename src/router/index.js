@@ -18,6 +18,7 @@ export default new Router({
     {
       path:'/detail',
       component: DetailPage,
+      redirect:'/detail/analysis',//为了不让用户访问一些不想展示的页面，所以使用了重定向redirect.
       children: [
         {
           path:'analysis',

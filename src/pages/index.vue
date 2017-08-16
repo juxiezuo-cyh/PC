@@ -62,22 +62,22 @@ export default {
         {
           src:require('../assets/slideShow/pic1.jpg'),
           title:'xx1',
-          href:'http://www.baidu.com'
+          href:'detail/analysis'
         },
         {
           src:require('../assets/slideShow/pic2.jpg'),
           title:'xx2',
-          href:'http://www.baidu.com'
+          href:'detail/count'
         },
         {
           src:require('../assets/slideShow/pic3.jpg'),
           title:'xx3',
-          href:'http://www.baidu.com'
+          href:'detail/forecast'
         },
         {
           src:require('../assets/slideShow/pic4.jpg'),
           title:'xx4',
-          href:'http://www.baidu.com'
+          href:'detail/publish'
         }
       ],
       boardList: [
