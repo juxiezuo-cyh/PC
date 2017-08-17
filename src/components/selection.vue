@@ -6,8 +6,9 @@
     </div>
     <div class="selection-list" v-if="isDrop">
       <ul>
-        <li v-for="item in selections"
-         :key="item.value">{{item.label}}</li>
+        <li v-for="(oitem,index) in selections" :key="item.value" @click="chooseSelection(index)">
+          {{item.label}}
+        </li>
       </ul>
     </div>
   </div>
@@ -15,10 +16,10 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       nowIndex: 0,
-      isDrop:false
+      isDrop: false
     }
   },
   props: {
@@ -33,8 +34,16 @@ export default {
     }
   },
   methods: {
-    toggleDrop () {
+    toggleDrop() {
       this.isDrop = !this.isDrop;
+    },
+    chooseSelection(index) {//通过传值获取点击的某个值
+      this.nowIndex = index;
+      this.isDrop = false;
+      this.$emit(
+        'on-change',
+        this.nowIndex
+      )
     }
   }
 }
@@ -45,6 +54,7 @@ export default {
   position: relative;
   display: inline-block;
 }
+
 .selection-show {
   border: 1px solid #e3e3e3;
   padding: 0 20px 0 10px;
@@ -52,11 +62,12 @@ export default {
   position: relative;
   cursor: pointer;
   height: 25px;
-  width: 51px;
+  width: 60px;
   line-height: 25px;
   border-radius: 3px;
   background: #fff;
 }
+
 .selection-show .arrow {
   display: inline-block;
   border-left: 4px solid transparent;
@@ -69,6 +80,7 @@ export default {
   margin-right: -14px;
   vertical-align: middle;
 }
+
 .selection-list {
   display: inline-block;
   position: absolute;
@@ -80,6 +92,7 @@ export default {
   border-bottom: 1px solid #e3e3e3;
   z-index: 5;
 }
+
 .selection-list li {
   padding: 5px 15px 5px 10px;
   border-left: 1px solid #e3e3e3;
@@ -89,8 +102,8 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
+
 .selection-list li:hover {
   background: #e3e3e3;
 }

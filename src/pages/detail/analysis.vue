@@ -34,7 +34,8 @@
           产品版本：
         </div>
         <div class="sales-board-line-right">
-
+          <!-- <v-chooser :choosers="productTypes"></v-chooser> -->
+          <!-- <v-multiply-chooser :multiply="productTypes"></v-multiply-chooser> -->
         </div>
       </div>
       <div class="sales-board-line">
@@ -110,6 +111,8 @@
 
 <script>
 import VSelection from '../../components/selection.vue'
+import VChooser from '../../components/chooser.vue'
+import VMultiplyChooser from '../../components/multiplyChooser.vue'
 export default {
   data () {
     return {
@@ -126,12 +129,14 @@ export default {
           label: '专家版',
           value: 2
         }
-    ]
+      ]
     }
 
   },
   components :{
-    VSelection
+    VSelection,
+    VChooser,
+    VMultiplyChooser
   }
 }
 </script>
