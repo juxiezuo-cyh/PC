@@ -18,7 +18,7 @@
           产品类型：
         </div>
         <div class="sales-board-line-right">
-          <VSelection :selections='productTypes'></VSelection>
+          <v-selection :selections='productTypes'></v-selection>
         </div>
       </div>
       <div class="sales-board-line">
