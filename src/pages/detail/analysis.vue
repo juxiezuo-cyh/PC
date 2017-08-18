@@ -10,7 +10,7 @@
           购买数量：
         </div>
         <div class="sales-board-line-right">
-          <!-- <v-counter></v-counter> -->
+          <v-counter :numberData="numberData"></v-counter>
         </div>
       </div>
       <div class="sales-board-line">
@@ -18,7 +18,7 @@
           产品类型：
         </div>
         <div class="sales-board-line-right">
-          <v-selection :selections='productTypes'></v-selection>
+          <v-selection :selections='pmTypes'></v-selection>
         </div>
       </div>
       <div class="sales-board-line">
@@ -26,7 +26,7 @@
           有效时间：
         </div>
         <div class="sales-board-line-right">
-
+          <v-chooser :choosers="choosersTime"></v-chooser>
         </div>
       </div>
       <div class="sales-board-line">
@@ -34,7 +34,7 @@
           产品版本：
         </div>
         <div class="sales-board-line-right">
-          <!-- <v-chooser :choosers="productTypes"></v-chooser> -->
+          <v-chooser :choosers="productTypes"></v-chooser>
           <!-- <v-multiply-chooser :multiply="productTypes"></v-multiply-chooser> -->
         </div>
       </div>
@@ -113,11 +113,44 @@
 import VSelection from '../../components/selection.vue'
 import VChooser from '../../components/chooser.vue'
 import VMultiplyChooser from '../../components/multiplyChooser.vue'
+import VCounter from '../../components/counter.vue'
 export default {
   data () {
     return {
+      numberData:{
+        min:0,
+        max:15
+      },
+      pmTypes: [
+        {
+          label: '入门版',
+          value: 0
+        },
+        {
+          label: '成熟版',
+          value: 1
+        },
+        {
+          label: '精通版',
+          value: 2
+        }
+      ],
+      choosersTime: [//有效期的选择 单选
+        {
+          label: '一年',
+          value: 0
+        },
+        {
+          label: '二年',
+          value: 0
+        },
+        {
+          label: '三年',
+          value: 0
+        }
+      ],
       productTypes:[
-      {
+        {
           label: '客户版',
           value: 0
         },
@@ -136,7 +169,8 @@ export default {
   components :{
     VSelection,
     VChooser,
-    VMultiplyChooser
+    VMultiplyChooser,
+    VCounter
   }
 }
 </script>
