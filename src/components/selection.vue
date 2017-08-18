@@ -6,7 +6,7 @@
     </div>
     <div class="selection-list" v-if="isDrop">
       <ul>
-        <li v-for="(oitem,index) in selections" :key="item.value" @click="chooseSelection(index)">
+        <li v-for="(item,index) in selections" :key="item.value" @click="chooseSelection(index)">
           {{item.label}}
         </li>
       </ul>
