@@ -42,7 +42,7 @@ export default {
       this.isDrop = false;
       this.$emit(
         'on-change',
-        this.nowIndex
+        this.selections[index]
       )
     }
   }

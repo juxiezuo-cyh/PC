@@ -2,11 +2,11 @@
   <div class="chooser-component">
     <ul class="chooser-list">
       <li
-      v-for="(item,index) in multiply"
-      :key="item.value"
-      :class="{active:checkActive(index)}"
-      @click="toggleSelection(index)"
-      :title="item.label">
+        v-for="(item,index) in choosers"
+        :key="item.value"
+        :class="{active:index === nowIndex}"
+        @click="chosenSelection(index)"
+      >
         {{item.label}}
       </li>
     </ul>
@@ -14,29 +14,20 @@
 </template>
 
 <script>
-import _ from 'lodash';
 export default {
-  data() {
+  data(){
     return {
-      nowIndexes: [0]
+      nowIndex:0
     }
   },
-  methods: {
-    toggleSelection(index) {
-      if (this.nowIndexes.indexOf(index) === -1) {
-        this.nowIndexes.push(index);
-      } else {
-        this.nowIndexes = _.remove(this.nowIndexes, (idx) => {
-          return idx !== index
-        })
-      }
-    },
-    checkActive(index) {
-      return this.nowIndexes.indexOf(index) !== -1
+  methods:{
+    chosenSelection (index) {
+      this.nowIndex = index;
+      this.$emit('on-change',this.choosers[index]);
     }
   },
   props: {
-    multiply: {
+    choosers: {
       type: Array,
       default: [{
         label: 'test',
@@ -52,8 +43,7 @@ export default {
   position: relative;
   display: inline-block;
 }
-
-.chooser-list li {
+.chooser-list li{
   display: inline-block;
   border: 1px solid #e3e3e3;
   height: 25px;
@@ -64,7 +54,6 @@ export default {
   text-align: center;
   cursor: pointer;
 }
-
 .chooser-list li.active {
   border-color: #4fc08d;
   background: #4fc08d;

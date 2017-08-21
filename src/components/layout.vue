@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import Dialog from './dialog.vue';
+import Dialog from './base/dialog.vue';
 import logForm from './logForm.vue';
 import regForm from './regForm.vue';
 export default {

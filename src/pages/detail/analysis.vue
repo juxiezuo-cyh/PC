@@ -10,7 +10,7 @@
           购买数量：
         </div>
         <div class="sales-board-line-right">
-          <v-counter :numberData="numberData"></v-counter>
+          <v-counter :numberData="numberData" @on-change="onParamChange('buyNum',$event)"></v-counter>
         </div>
       </div>
       <div class="sales-board-line">
@@ -18,7 +18,7 @@
           产品类型：
         </div>
         <div class="sales-board-line-right">
-          <v-selection :selections='pmTypes'></v-selection>
+          <v-selection :selections='pmTypes' @on-change="onParamChange('buyType',$event)"></v-selection>
         </div>
       </div>
       <div class="sales-board-line">
@@ -26,7 +26,7 @@
           有效时间：
         </div>
         <div class="sales-board-line-right">
-          <v-chooser :choosers="choosersTime"></v-chooser>
+          <v-chooser :choosers="choosersTime" @on-change="onParamChange('period',$event)"></v-chooser>
         </div>
       </div>
       <div class="sales-board-line">
@@ -34,8 +34,8 @@
           产品版本：
         </div>
         <div class="sales-board-line-right">
-          <v-chooser :choosers="productTypes"></v-chooser>
-          <!-- <v-multiply-chooser :multiply="productTypes"></v-multiply-chooser> -->
+          <!-- <v-chooser :choosers="productTypes"></v-chooser> -->
+          <v-multiply-chooser :multiply="productTypes" @on-change="onParamChange('versions',$event)"></v-multiply-chooser>
         </div>
       </div>
       <div class="sales-board-line">
@@ -110,13 +110,18 @@
 </template>
 
 <script>
-import VSelection from '../../components/selection.vue'
-import VChooser from '../../components/chooser.vue'
-import VMultiplyChooser from '../../components/multiplyChooser.vue'
-import VCounter from '../../components/counter.vue'
+import VSelection from '../../components/base/selection.vue'
+import VChooser from '../../components/base/chooser.vue'
+import VMultiplyChooser from '../../components/base/multiplyChooser.vue'
+import VCounter from '../../components/base/counter.vue'
+import _ from 'lodash'
 export default {
   data () {
     return {
+      buyNum: 0,
+      buyType: {},
+      period: {},
+      versions: [],
       numberData:{
         min:0,
         max:15
@@ -171,6 +176,32 @@ export default {
     VChooser,
     VMultiplyChooser,
     VCounter
+  },
+  methods: {
+    onParamChange (attr,val) {
+      this[attr] = val;
+      console.log(attr,this[attr]);
+    },
+    getPrice () {
+      let buyVersionsArray = _.map(thisl.versions,(item) => {
+        return item.value
+      })
+      let reqParams = {
+        buyNum: this.buyNum,
+        buyType: this.buyType,
+        period: this.period,
+        version: buyVersionsArray.join(',')
+      }
+      // this.$http.post('/api/getPrice',reqParams).then((res) => {
+      //   console.log(res);
+      // })
+    }
+  },
+  mounted () {
+    this.buyNum =  0,
+    this.buyType = this.pmTypes[1],
+    this.versions = [this.productTypes[1]],
+    this.period = this.choosersTime[1]
   }
 }
 </script>
