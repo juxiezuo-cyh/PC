@@ -43,13 +43,13 @@
           总价：
         </div>
         <div class="sales-board-line-right">
-         元
+          元
         </div>
       </div>
       <div class="sales-board-line">
         <div class="sales-board-line-left">&nbsp;</div>
         <div class="sales-board-line-right">
-          <div class="button">
+          <div class="button" @click="showPayDialog">
             立即购买
           </div>
         </div>
@@ -77,7 +77,8 @@
         <li>用户所在地理区域分布状况等</li>
       </ul>
     </div>
-    <!-- <my-dialog :is-show="isShowPayDialog" @on-close="hidePayDialog">
+
+    <my-dialog :is-show="isShowPayDialog" @on-close="hidePayDialog">
       <table class="buy-dialog-table">
         <tr>
           <th>购买数量</th>
@@ -87,44 +88,60 @@
           <th>总价</th>
         </tr>
         <tr>
-          <td>{{ buyNum }}</td>
-          <td>{{ buyType.label }}</td>
-          <td>{{ period.label }}</td>
+          <td>{{buyNum}}</td>
+          <td>{{buyType.label}}</td>
+          <td>{{period.label}}</td>
           <td>
-            <span v-for="item in versions">{{ item.label }}</span>
+            <span v-for="item in versions">{{item.label}}</span>
           </td>
-          <td>{{ price }}</td>
+          <td>{{price}}</td>
         </tr>
       </table>
       <h3 class="buy-dialog-title">请选择银行</h3>
       <bank-chooser @on-change="onChangeBanks"></bank-chooser>
-      <div class="button buy-dialog-btn" @click="confirmBuy">
-        确认购买
-      </div>
+      <div class="button buy-dialog-btn" @click="confirmBuy">确认购买</div>
     </my-dialog>
     <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">
-      支付失败！
-    </my-dialog> -->
-    <!-- <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order> -->
+      支付失败
+    </my-dialog>
+    <check-order @on-close-check-dialog="hideCheckOrder" :is-show-check-dialog="isShowCheckOrder"></check-order>
   </div>
 </template>
 
 <script>
-import VSelection from '../../components/base/selection.vue'
-import VChooser from '../../components/base/chooser.vue'
-import VMultiplyChooser from '../../components/base/multiplyChooser.vue'
-import VCounter from '../../components/base/counter.vue'
+import VSelection from '../../components/base/selection'
+import VChooser from '../../components/base/chooser'
+import VMultiplyChooser from '../../components/base/multiplyChooser'
+import VCounter from '../../components/base/counter'
+import CheckOrder from '../../components/checkOrder'
 import _ from 'lodash'
+import Dialog from '../../components/base/dialog'
+import BankChooser from '../../components/bankChooser'
 export default {
-  data () {
+  components: {
+    VSelection,
+    VChooser,
+    VMultiplyChooser,
+    VCounter,
+    myDialog: Dialog,
+    BankChooser,
+    CheckOrder
+  },
+  data() {
     return {
-      buyNum: 0,
+      isShowCheckDialog: false,
+      isShowPayDialog: false,
+      isShowErrDialog: false,
+      isShowCheckOrder:false,
+      price: 1,
+      buyNum: 1,
       buyType: {},
       period: {},
       versions: [],
-      numberData:{
-        min:0,
-        max:15
+      bankId: null,
+      numberData: {
+        min: 1,
+        max: 15
       },
       pmTypes: [
         {
@@ -154,7 +171,7 @@ export default {
           value: 0
         }
       ],
-      productTypes:[
+      productTypes: [
         {
           label: '客户版',
           value: 0
@@ -171,19 +188,49 @@ export default {
     }
 
   },
-  components :{
-    VSelection,
-    VChooser,
-    VMultiplyChooser,
-    VCounter
-  },
   methods: {
-    onParamChange (attr,val) {
-      this[attr] = val;
-      console.log(attr,this[attr]);
+    hideCheckOrder () {
+      this.isShowCheckOrder = false;
     },
-    getPrice () {
-      let buyVersionsArray = _.map(thisl.versions,(item) => {
+    hideErrDialog() {
+      this.isShowErrDialog = false;
+    },
+    showPayDialog() {
+      this.isShowPayDialog = true;
+    },
+    hidePayDialog() {
+      this.isShowPayDialog = false;
+    },
+    onChangeBanks(bankObj) {
+      this.bankId = bankObj.id;
+    },
+    confirmBuy() {
+      let buyVersionsArray = _.map(this.versions, (item) => {
+        return item.value
+      })
+      let reqParams = {
+        buyNum: this.buyNum,
+        buyType: this.buyType,
+        period: this.period,
+        version: buyVersionsArray.join(','),
+        bankId: this.bankId
+      }
+      this.isShowCheckOrder = true;
+      this.isShowPayDialog = false;
+      // this.$http.post('/api/orderList',reqParams).then((res) => {
+      //   this.orderId = res.data.orderId;
+      //   this.isShowCheckDialog = true;
+      //   this.isShowPayDialog = false;
+      // },(err) => {
+      //   // 失败的回调
+      // })
+    },
+    onParamChange(attr, val) {
+      this[attr] = val;
+      console.log(attr, this[attr]);
+    },
+    getPrice() {
+      let buyVersionsArray = _.map(this.versions, (item) => {
         return item.value
       })
       let reqParams = {
@@ -193,15 +240,17 @@ export default {
         version: buyVersionsArray.join(',')
       }
       // this.$http.post('/api/getPrice',reqParams).then((res) => {
-      //   console.log(res);
+
+      // },(err) => {
+      //   // 失败的回调
       // })
     }
   },
-  mounted () {
-    this.buyNum =  0,
-    this.buyType = this.pmTypes[1],
-    this.versions = [this.productTypes[1]],
-    this.period = this.choosersTime[1]
+  mounted() {
+    this.buyNum = 1,
+      this.buyType = this.pmTypes[1],
+      this.versions = [this.productTypes[1]],
+      this.period = this.choosersTime[1]
   }
 }
 </script>
