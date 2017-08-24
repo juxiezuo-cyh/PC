@@ -31,7 +31,7 @@
             <h2>{{item.title}}</h2>
             <p>{{item.description}}</p>
             <div class="index-board-button">
-              <a href="" class="button">立刻购买</a>
+              <router-link  :to="{path:item.path}" class="button">立刻购买</router-link>
             </div>
           </div>
         </div>
@@ -85,25 +85,29 @@ export default {
           title: '开',
           description: '开放产品是一款开放产品',
           id: 'car',
-          saleout: false
+          saleout: false,
+          path:'/detail/analysis'
         },
         {
           title: '开发',
           description: '开放产品是一款开放产品',
           id: 'earth',
-          saleout: false
+          saleout: false,
+          path:'/detail/analysis'
         },
         {
           title: '开发产',
           id: 'loud',
           description: '开放产品是一款开放产品',
-          saleout: false
+          saleout: false,
+          path:'/detail/analysis'
         },
         {
           title: '开发产品',
           id: 'hill',
           description: '开放产品是一款开放产品',
-          saleout: false
+          saleout: false,
+          path:'/detail/analysis'
         }
       ],
       newsList: [

@@ -4,10 +4,10 @@
       <div class="button" @click="checkStatus">支付成功</div>
       <div class="button" @click="checkStatus">支付失败</div>
     </this-dialog>
-    <this-dialog :is-show="isShowSuccessDialog" @on-close="hideSuccessDialog">
+    <this-dialog :is-show="isShowSuccessDialog" @on-close="toOrderList">
       购买成功
     </this-dialog>
-    <this-dialog :is-show="isShowFailDialog" @on-close="hideSuccessDialog">
+    <this-dialog :is-show="isShowFailDialog" @on-close="toOrderList">
       购买失败
     </this-dialog>
   </div>
@@ -41,6 +41,9 @@ export default {
     },
     hideSuccessDialog () {
       this.isShowSuccessDialog = false;
+    },
+    toOrderList () {
+      this.$router.push({path:'/orderlist'});
     }
   }
 }
